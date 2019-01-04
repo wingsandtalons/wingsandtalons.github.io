@@ -1,5 +1,37 @@
-span.test {
-  color: red;
-  font-weight: bold;
-
+div.header {
+  height: 100px;
+  background-color: #f3f3f3;
 }
+div.content {
+  margin-top: 100px;
+  margin-bottom: 160px;
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+}
+div.content img.tn {
+  width: 100px;
+}
+div.footer {
+  height: 160px;
+  background-color: #f3f3f3;
+}
+div.footer div.menu {
+  overflow: scroll;
+  white-space: nowrap;
+  text-align: center;
+}
+
+div.footer div.menu div.item {
+  display: inline-block;
+}
+
+div.menu div.item img.tn {
+  width: 80px;
+}
+
+
+
+
+
+
