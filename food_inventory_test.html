@@ -1,0 +1,336 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="res/wat_mgmt.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <header></header>
+
+    <main>
+
+        <section id="current_levels">
+            <header>
+                <h1><span class="icon-stock_level"></span>CURRENT STOCK</h1>
+            </header>
+            <table></table>
+
+        </section>
+
+        <section id="data_entry">
+            <header>
+                <h1><span class="icon-stock_entry"></span>STOCK ENTRY</h1>
+                <input type="date" name="entry_date" value="" title="Click to change the entry date" />
+            </header>
+            <table role="presentation">
+                <tr>
+                    <td colspan="4">&nbsp;</td>
+                    <td rowspan="3" class="actions">
+                        <button data-type="NEW" onclick="APP.countClicked(this)"><span class="icon-stock_add"></span>Addition of <b>NEW</b> inventory</button>
+                        <button data-type="OLD" onclick="APP.countClicked(this)"><span class="icon-stock_tally"></span>Count of <b>EXISTING</b> stock</button>
+                    </td>
+                </tr>
+                <tr class="inputs">
+                    <td data-type="food_type">
+                        <select class="input" onchange="APP.foodTypeChanged(this)">
+                            <option value="">(Select a food type)</option>
+                        </select>
+                    </td>
+                    <td data-type="perbag_qty">
+                        <input class="input" type="number" step="1" min="0" />
+                    </td>
+                    <td>+</td>
+                    <td data-type="singles_qty">
+                        <input class="input" type="number" step="1" min="0" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td data-type="perbag_qty" class="hint">(bags of <span class="qty"></span>)</td>
+                    <td></td>
+                    <td class="hint">(singles)</td>
+                </tr>
+                <tr></tr>
+            </table>
+        </section>
+
+    </main>
+
+    <dialog id="stock_entry_confirm_dialog" onclose="APP.confirmDialog({action:'CLOSED'})">
+        <div class="icon"></div>
+        <div class="mesg"></div>
+        <div class="hint">OK to proceed?</div>
+        <div class="controls">
+            <button data-type="cancel" onclick="document.getElementById('stock_entry_confirm_dialog').close('cancelled')">Cancel</button>
+            <button data-type="ok" onclick="document.getElementById('stock_entry_confirm_dialog').close('ok')">OK</button>
+        </div>
+    </dialog>
+
+    <dialog id="all_entries_dialog">
+        <header><h1>Records for <span></span></h1><div onclick="document.getElementById('all_entries_dialog').close()">X</div></header>
+        <section>
+            <table></table>
+        </section>
+    </dialog>
+
+
+    <template id="current_level_container_template">
+        <div class="current_level" data-type="">
+            <h2></h2>
+        </div>
+    </template>
+
+
+
+    <!--
+    https://css-tricks.com/how-to-make-a-line-chart-with-css/
+    https://dgerrells.com/blog/how-not-to-use-box-shadows
+
+    APP.confirmDialog({action:'OPEN',mesg:'testing...'})
+
+-->
+
+    <script>
+
+        async function test() {
+            //const result = await APP.sendUpdate();
+            //const result = await APP.getLookups();
+            const result = await APP.getInventoryData();
+
+            console.log('result:', result);
+
+
+        }
+
+        const _INVENTORY_DATA = { "M_L": [{ "ts": 1722953940184, "a": "NEW5", "d": 1727676000000, "n": 40 }, { "ts": 1722953940184, "a": "OLD4", "d": 1727589600000, "n": 18 }, { "ts": 1722953940184, "a": "OLD3", "d": 1727244000000, "n": 25 }, { "ts": 1722953940184, "a": "NEW2", "d": 1726725600000, "n": 30 }, { "ts": 1722953940184, "a": "OLD1", "d": 1725948000000, "n": 12 }], "Q": [{ "ts": 1722953940184, "a": "OLD10", "d": 1726812000000, "n": 25 }, { "ts": 1722953940184, "a": "OLD9", "d": 1726725600000, "n": 30 }, { "ts": 1722953940184, "a": "NEW8", "d": 1726639200000, "n": 40 }, { "ts": 1722953940184, "a": "OLD7", "d": 1726552800000, "n": 18 }, { "ts": 1722953940184, "a": "OLD6", "d": 1726466400000, "n": 22 }, { "ts": 1722953940184, "a": "NEW5", "d": 1726380000000, "n": 30 }, { "ts": 1722953940184, "a": "OLD4", "d": 1726293600000, "n": 12 }, { "ts": 1722916492072, "a": "NEW3", "d": 1726207200000, "n": 20 }, { "ts": 1722916492072, "a": "NEW2", "d": 1726120800000, "n": 15 }, { "ts": 1722953940184, "a": "OLD1", "d": 1726034400000, "n": 10 }] };
+
+        const _LOOKUP_DATA = { "FOOD_TYPE": [{ "code": "M_S", "desc": "MOUSE (small)", "perbag": 50 }, { "code": "M_L", "desc": "MOUSE (large)", "perbag": 30 }, { "code": "Q", "desc": "QUAIL", "perbag": 15 }], "REFS": [{ "key": "k1", "value": "v1", "key_ext": "kx1", "val_ext": "vx1" }, { "key": "k2", "value": "v2", "key_ext": "kx2", "val_ext": "vx2" }] };
+
+        const APP = {
+            ENDPOINT: "https://script.google.com/macros/s/AKfycbwXPPbHkLTrQgLShJok3gfCk728Mg7WfQaMCeuvkasDQfmlWyA1ad7CNxTfK3lXClBi/exec",
+            LOOKUP: {},
+            DATA: {},
+
+            async init() {
+                console.log('initing...');
+                //this.LOOKUP = await this.getLookups();
+                this.LOOKUP = _LOOKUP_DATA;
+                console.log('--- got lookups');
+
+                // render data entry section
+                const dataEntrySection = document.querySelector('#data_entry');
+                dataEntrySection.querySelector('input[name=entry_date]').valueAsNumber = new Date();
+
+                const options = ['<option value="">(Select a food type)</option>'];
+                const selectRef = dataEntrySection.querySelector('[data-type=food_type] select');
+                this.LOOKUP.FOOD_TYPE.forEach(e => {
+                    selectRef.appendChild(this.createElement({ tag: 'option', attributes: { 'value': e.code }, text: e.desc }));
+                });
+                dataEntrySection.querySelector('[data-type=perbag_qty] input').value = 0;
+                dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent = '';
+                dataEntrySection.querySelector('[data-type=singles_qty] input').value = 0;
+
+                console.log('--- getting inventory data');
+                //const data = await this.getInventoryData();
+                this.DATA = _INVENTORY_DATA;
+                //console.log(' inventory data:', data);
+
+                // render current levels
+                this.LOOKUP.FOOD_TYPE.forEach(e => this.renderCurrentLevel(e.code));
+            },
+
+            getTypeDefn(typeCode) {
+                return this.LOOKUP.FOOD_TYPE.find(e => e.code === typeCode);
+            },
+
+            createElement({ tag = "div", attributes = {}, classes = [], html = "", text = "", children = [] }) {
+                const element = document.createElement(tag);
+                Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
+                classes.forEach(c => element.classList.add(c));
+                if (html) element.innerHTML = html;
+                if (text) element.textContent = text;
+                children.forEach(child => element.appendChild((child instanceof HTMLElement) ? child : this.createElement(child)));
+                return element;
+            },
+
+            renderCurrentLevel(typeCode) {
+                const typeDefn = this.getTypeDefn(typeCode);
+                const typeData = this.DATA[typeCode];
+                if (Array.isArray(typeData)) {
+                    const tbody = this.createElement({ tag: 'tbody', attributes: { 'data-type': typeCode } });
+                    const ctrlHtml = `<span class="ctrl-link" onclick="APP.moreClicked('${typeCode}')" title="Click to see more records for ${typeDefn.desc}">more</span>`;
+                    let rowsCount = 0;
+                    for (const row of typeData) {
+                        const action = (row['a']).startsWith('NEW') ? 'NEW' : 'OLD';
+                        const tr = this.createElement({ tag: 'tr' });
+                        tr.appendChild(this.createElement({ tag: 'th', text: (rowsCount === 0) ? typeDefn.desc : '' }));
+                        tr.appendChild(this.createElement({ tag: 'td', text: row.n }));
+                        tr.appendChild(this.createElement({ tag: 'td', html: (action === 'NEW') ? '<span class="icon-stock_add"></span> Added' : '<span class="icon-stock_tally"></span> Counted' }));
+                        tr.appendChild(this.createElement({ tag: 'td', text: new Date(row.d).toLocaleDateString() }));
+                        tr.appendChild(this.createElement({ tag: 'td', html: (rowsCount === 0) ? ctrlHtml : '' }));
+                        tbody.appendChild(tr);
+                        if (action === 'OLD') break;
+                        rowsCount++;
+                    }
+                    document.querySelector("#current_levels table").appendChild(tbody);
+                }
+            },
+            moreClicked(typeCode) {
+                const typeDefn = this.getTypeDefn(typeCode);
+                const typeData = this.DATA[typeCode];
+                const dialogRef = document.getElementById('all_entries_dialog');
+                dialogRef.querySelector('header > h1 > span').textContent = typeDefn.desc;
+                const tbody = this.createElement({ tag: 'tbody', attributes: { 'data-type': typeCode } });
+                for (const row of typeData) {
+                    const action = (row['a']).startsWith('NEW') ? 'NEW' : 'OLD';
+                    const tr = this.createElement({ tag: 'tr' });
+                    tr.appendChild(this.createElement({ tag: 'td', text: row.n }));
+                    tr.appendChild(this.createElement({ tag: 'td',
+                                                        html: (action === 'NEW') ? '<span class="icon-stock_add"></span> Added' : '<span class="icon-stock_tally"></span> Counted',
+                                                        attributes: {'title': new Date(row.ts).toLocaleString()}
+                                                      }));
+                    tr.appendChild(this.createElement({ tag: 'td', text: new Date(row.d).toLocaleDateString() }));
+                    tbody.appendChild(tr);
+                }
+                const tableRef = dialogRef.querySelector('table');
+                if (tableRef.querySelector('tbody')) {
+                    tableRef.removeChild(tableRef.querySelector('tbody'));
+                }
+                tableRef.appendChild(tbody);
+
+                dialogRef.showModal();
+            },
+
+            foodTypeChanged(ref) {
+                const selectedOptionValue = ref.options[ref.selectedIndex].value;
+                const dataEntrySection = document.querySelector('#data_entry');
+                dataEntrySection.querySelector('[data-type=perbag_qty] input').value = 0;
+                dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent = '';
+                dataEntrySection.querySelector('[data-type=singles_qty] input').value = 0;
+                if (selectedOptionValue !== '') {
+                    const selectedLookup = this.LOOKUP.FOOD_TYPE.find(e => e.code === selectedOptionValue);
+                    if (selectedLookup) {
+                        dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent = selectedLookup.perbag;
+                    }
+                }
+            },
+            countClicked(ref) {
+                const dataEntrySection = document.querySelector('#data_entry');
+                const bags = Math.round(dataEntrySection.querySelector('[data-type=perbag_qty] input').value);
+                if (bags < 0) bags = 0;
+                dataEntrySection.querySelector('[data-type=perbag_qty] input').value = bags;
+                const singles = Math.round(dataEntrySection.querySelector('[data-type=singles_qty] input').value);
+                if (singles < 0) singles = 0;
+                dataEntrySection.querySelector('[data-type=singles_qty] input').value = singles;
+
+                const entryDateRef = dataEntrySection.querySelector('input[name=entry_date]');
+                if (isNaN(entryDateRef.valueAsNumber)) {
+                    entryDateRef.valueAsNumber = new Date();
+                }
+
+                const foodTypeRef = dataEntrySection.querySelector('[data-type=food_type] select');
+                const selectedOptionValue = foodTypeRef.options[foodTypeRef.selectedIndex].value;
+                if (selectedOptionValue === '' || (bags === 0 && singles === 0)) {
+                    console.log('invalid');
+                    dataEntrySection.querySelectorAll(".inputs .input").forEach(e => e.classList.add("animate-error-blink"));
+                    setTimeout(()=>{dataEntrySection.querySelectorAll(".inputs .input").forEach(e => e.classList.remove("animate-error-blink"));}, 1000);
+                    return;
+                } else {
+                    const selectedFoodDesc = foodTypeRef.options[foodTypeRef.selectedIndex].text
+                    const perbag = +(dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent);
+                    const dialogRef = document.querySelector('#stock_entry_confirm_dialog');
+                    dialogRef.querySelector('.icon').classList.add((ref.getAttribute('data-type') === 'NEW') ? 'icon-stock_add' : 'icon-stock_tally');
+                    let html = `Recording ${bags * perbag + singles} ${selectedFoodDesc} `;
+                    html += (ref.getAttribute('data-type') === 'NEW') ? 'as <b>NEW</b> inventory' : 'into <b>EXISTING</b> stock';
+                    html += ` on ${entryDateRef.value}</p>`;
+                    dialogRef.querySelector('.mesg').innerHTML = html;
+
+                    this.confirmDialog({action: 'OPEN'}) ;
+                }
+
+            },
+            confirmDialog({ action}) { // action: 'OPEN' | 'CLOSED'
+                const dialogRef = document.querySelector('#stock_entry_confirm_dialog');
+                if (action === 'OPEN') {
+                    dialogRef.returnValue = '';
+                    dialogRef.showModal();
+                } else {
+                    const returnValue = dialogRef.returnValue;
+                    console.log('closed:', returnValue);
+                    if (returnValue === 'ok') {
+                        console.log('send update...');
+                    }
+
+                }
+            },
+
+            // let from = configRow.querySelector(".from input").valueAsNumber;
+            // if (isNaN(from)) from = 0;
+            // // but the parsed value is always formatted yyyy-mm-dd.
+            // const dateControl = document.querySelector('input[type="date"]');
+            // dateControl.value = "2017-06-01";
+            // console.log(dateControl.value); // prints "2017-06-01"
+            // console.log(dateControl.valueAsNumber); // prints 1496275200000, a JavaScript timestamp (ms)
+
+            async getLookups() {
+                const uri = this.ENDPOINT + '?op=get_lookups';
+                return await this.getJson(uri);
+            },
+
+            async getInventoryData() {
+                const uri = this.ENDPOINT + '?op=get_inventory_data';
+                return await this.getJson(uri);
+            },
+
+            async sendUpdate() {
+                const formData = new FormData();
+                formData.append("action", "NEW"); // NEW | OLD
+                formData.append("type", "Q");
+                formData.append("date", "2024-09-11");
+                formData.append("count", "10");
+                return await this.post(this.ENDPOINT, formData);
+            },
+
+            async post(uri, body) {
+                let result_json = {};
+                try {
+                    const response = await fetch(uri, {
+                        method: 'POST',
+                        body: body
+                    });
+                    result_json = await response.json();
+                } catch (err) {
+                    console.log('posting error err_mesg,', err);
+                    result_json = { err_mesg: 'posting error,' };
+                };
+                return result_json;
+            },
+            async getJson(uri) {
+                let result_json = {};
+                try {
+                    const response = await fetch(uri);
+                    result_json = await response.json();
+                } catch (err) {
+                    console.log('get op error,', err);
+                    result_json = { err_mesg: 'get error,' };
+                };
+                return result_json;
+            },
+        };
+
+        APP.init();
+
+    </script>
+</body>
+
+</html>
