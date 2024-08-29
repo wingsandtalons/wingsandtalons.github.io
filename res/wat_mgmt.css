@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'icomoon';
-    src: url('/res/icons.woff?p1kp3j') format('woff');
+    src: url('/res/icons.woff?cjgjhl') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -19,21 +19,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
 .icon-stock_add:before {
     content: "\e900";
 }
-
 .icon-stock_entry:before {
     content: "\e901";
 }
-
 .icon-stock_level:before {
     content: "\e902";
 }
-
 .icon-stock_tally:before {
     content: "\e903";
+}
+.icon-caret_down:before {
+    content: "\e904";
+}
+.icon-caret_up:before {
+    content: "\e905";
 }
 
 html,
@@ -85,7 +87,6 @@ body {
     height: 100%;
     color: #222;
     background: #dcdcdc;
-    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 h1,
@@ -166,8 +167,13 @@ select {
     font-size: 1em;
 }
 
+
+.hide {
+    display:none!important;
+}
+
 .ctrl-link {
-    color: blue;
+    color: #2196F3;;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -175,6 +181,10 @@ select {
 .ctrl-link:hover {
     text-decoration: none;
 }
+
+
+
+
 
 main {
     width: fit-content;
@@ -207,7 +217,11 @@ section>header h1 {
 section>header>h1 [class^="icon-"] {
     margin-right: 8px;
 }
-
+section>header .icon-caret_up, section>header .icon-caret_down {
+    color: #2196F3;
+    cursor: pointer;
+    font-weight: bold;
+}
 .icon-stock_add,
 .icon-stock_tally {
     color: white;
@@ -222,6 +236,10 @@ section>header>h1 [class^="icon-"] {
     background-color: #FBA302;
 }
 
+#current_levels header {
+    display: flex;
+    justify-content: space-between;
+}
 
 #current_levels table {
     width: 100%;
@@ -350,41 +368,49 @@ dialog button {
     white-space: nowrap;
     border-radius: 4px;
 }
-
+dialog button[data-type=ok] {
+    color: white;
+    background-color: #2196F3;
+}
+dialog button[data-type=cancel] {
+    color: dimgray;
+    background-color: white;
+}
 dialog button:hover {
     background-color: silver;
 }
 
-dialog#stock_entry_confirm_dialog button[data-type=ok] {
-    background-color: #2196F3;
+
+dialog#alert_dialog {
+    padding: 24px;
+}
+dialog#alert_dialog div {
+    margin: 20px 0;
+    text-align: center;
 }
 
-dialog#stock_entry_confirm_dialog button[data-type=ok] {
-    color: white;
-    background-color: #2196F3;
+dialog#stock_entry_confirm_dialog {
+    padding: 24px;
 }
 
-dialog#stock_entry_confirm_dialog button[data-type=cancel] {
-    color: dimgray;
-    background-color: white;
+dialog#stock_entry_confirm_dialog section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 dialog#stock_entry_confirm_dialog div.icon {
     font-size: 2em;
-    text-align: center;
+    margin: 0 0 24px 0;
 }
 
 dialog#stock_entry_confirm_dialog div.mesg {
-    margin: 20px 0;
+    margin: 0 0 24px 0;
 }
 
-dialog#stock_entry_confirm_dialog div.hint {
-    text-align: center;
-    margin: 20px 0;
-}
-
-dialog#stock_entry_confirm_dialog div.controls {
-    text-align: right;
+dialog#stock_entry_confirm_dialog button {
+    margin: 0 12px;
 }
 
 dialog#all_entries_dialog {
@@ -425,6 +451,23 @@ dialog#all_entries_dialog>section table tr td:nth-child(2) {
     padding: 0 20px;
 }
 
+.animate-blink {
+    animation: blink 1.0s infinite;
+    animation-fill-mode: both;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .animate-error-blink {
     animation: error-blink 0.4s infinite;
     animation-fill-mode: both;
@@ -433,7 +476,6 @@ dialog#all_entries_dialog>section table tr td:nth-child(2) {
 @keyframes error-blink {
     0% {
         opacity: 0;
-        /* background-color: blue; */
         border: 3px solid red;
     }
     50% {
@@ -441,7 +483,6 @@ dialog#all_entries_dialog>section table tr td:nth-child(2) {
     }
     100% {
         opacity: 0;
-        /* background-color: unset; */
         border: unset;
     }
 }

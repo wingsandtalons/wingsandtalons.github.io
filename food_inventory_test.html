@@ -22,8 +22,11 @@
         <section id="current_levels">
             <header>
                 <h1><span class="icon-stock_level"></span>CURRENT STOCK</h1>
+                <div onclick="APP.expandCollapse(this)" class="icon-caret_down"></div>
             </header>
-            <table></table>
+            <table class="expandCollapsable">
+                <tbody><tr><th class="animate-blink">Loading...</th></tr></tbody>
+            </table>
 
         </section>
 
@@ -38,6 +41,7 @@
                     <td rowspan="3" class="actions">
                         <button data-type="NEW" onclick="APP.countClicked(this)"><span class="icon-stock_add"></span>Addition of <b>NEW</b> inventory</button>
                         <button data-type="OLD" onclick="APP.countClicked(this)"><span class="icon-stock_tally"></span>Count of <b>EXISTING</b> stock</button>
+                        <div class="hide"><input type="radio" name="action" id="action_NEW" value="NEW" /><input type="radio" name="action" id="action_OLD" value="OLD" /></div>
                     </td>
                 </tr>
                 <tr class="inputs">
@@ -66,14 +70,25 @@
 
     </main>
 
-    <dialog id="stock_entry_confirm_dialog" onclose="APP.confirmDialog({action:'CLOSED'})">
-        <div class="icon"></div>
-        <div class="mesg"></div>
-        <div class="hint">OK to proceed?</div>
-        <div class="controls">
-            <button data-type="cancel" onclick="document.getElementById('stock_entry_confirm_dialog').close('cancelled')">Cancel</button>
-            <button data-type="ok" onclick="document.getElementById('stock_entry_confirm_dialog').close('ok')">OK</button>
-        </div>
+    <dialog id="alert_dialog">
+        <div></div>
+        <div><button data-type="ok" onclick="document.getElementById('alert_dialog').close()">OK</button></div>
+    </dialog>
+
+    <dialog id="stock_entry_confirm_dialog" oncancel="console.log('escaped')">
+        <section data-step="pre">
+            <div class="icon icon-stock_tally"></div>
+            <div class="mesg"></div>
+            <div class="mesg">OK to proceed?</div>
+            <div class="controls">
+                <button data-type="cancel" onclick="document.getElementById('stock_entry_confirm_dialog').close()">Cancel</button>
+                <button data-type="ok" onclick="APP.stockEntryConfirmDialog({action:'PROCEED'})">OK</button>
+            </div>
+        </section>
+        <section data-step="post">
+            <div class="mesg"></div>
+            <button data-type="ok" onclick="document.getElementById('stock_entry_confirm_dialog').close()">OK</button>
+        </section>
     </dialog>
 
     <dialog id="all_entries_dialog">
@@ -93,6 +108,8 @@
 
 
     <!--
+
+    https://developers.google.com/apps-script/guides/web
     https://css-tricks.com/how-to-make-a-line-chart-with-css/
     https://dgerrells.com/blog/how-not-to-use-box-shadows
 
@@ -117,50 +134,46 @@
         const _LOOKUP_DATA = { "FOOD_TYPE": [{ "code": "M_S", "desc": "MOUSE (small)", "perbag": 50 }, { "code": "M_L", "desc": "MOUSE (large)", "perbag": 30 }, { "code": "Q", "desc": "QUAIL", "perbag": 15 }], "REFS": [{ "key": "k1", "value": "v1", "key_ext": "kx1", "val_ext": "vx1" }, { "key": "k2", "value": "v2", "key_ext": "kx2", "val_ext": "vx2" }] };
 
         const APP = {
-            ENDPOINT: "https://script.google.com/macros/s/AKfycbwXPPbHkLTrQgLShJok3gfCk728Mg7WfQaMCeuvkasDQfmlWyA1ad7CNxTfK3lXClBi/exec",
+            ENDPOINT: "https://script.google.com/macros/s/AKfycbwAmvqKjvst5urMuoliM5JjbUp3NejDGsh0KGYiRDXm8lXkix6U8Mt-ccEw7xwB_nBw/exec",
             LOOKUP: {},
             DATA: {},
 
             async init() {
                 console.log('initing...');
-                //this.LOOKUP = await this.getLookups();
-                this.LOOKUP = _LOOKUP_DATA;
-                console.log('--- got lookups');
+                await this.renderDataEntrySection()
+                await this.renderCurrentStockSection();
 
+            },
+
+            async renderDataEntrySection() {
+                this.LOOKUP = await this.getLookups();
+                //this.LOOKUP = _LOOKUP_DATA;
+                console.log('--- got lookups');
                 // render data entry section
                 const dataEntrySection = document.querySelector('#data_entry');
                 dataEntrySection.querySelector('input[name=entry_date]').valueAsNumber = new Date();
-
                 const options = ['<option value="">(Select a food type)</option>'];
                 const selectRef = dataEntrySection.querySelector('[data-type=food_type] select');
                 this.LOOKUP.FOOD_TYPE.forEach(e => {
                     selectRef.appendChild(this.createElement({ tag: 'option', attributes: { 'value': e.code }, text: e.desc }));
                 });
+                this.resetDataEntrySection();
+            },
+            resetDataEntrySection() {
+                const dataEntrySection = document.querySelector('#data_entry');
+                dataEntrySection.querySelector('[data-type=food_type] select').value = "";
                 dataEntrySection.querySelector('[data-type=perbag_qty] input').value = 0;
                 dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent = '';
                 dataEntrySection.querySelector('[data-type=singles_qty] input').value = 0;
-
+            },
+            async renderCurrentStockSection() {
                 console.log('--- getting inventory data');
-                //const data = await this.getInventoryData();
-                this.DATA = _INVENTORY_DATA;
+                this.DATA = await this.getInventoryData();
+                //this.DATA = _INVENTORY_DATA;
                 //console.log(' inventory data:', data);
-
                 // render current levels
+                document.querySelectorAll("#current_levels table tbody").forEach(tbody => tbody.parentNode.removeChild(tbody));
                 this.LOOKUP.FOOD_TYPE.forEach(e => this.renderCurrentLevel(e.code));
-            },
-
-            getTypeDefn(typeCode) {
-                return this.LOOKUP.FOOD_TYPE.find(e => e.code === typeCode);
-            },
-
-            createElement({ tag = "div", attributes = {}, classes = [], html = "", text = "", children = [] }) {
-                const element = document.createElement(tag);
-                Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
-                classes.forEach(c => element.classList.add(c));
-                if (html) element.innerHTML = html;
-                if (text) element.textContent = text;
-                children.forEach(child => element.appendChild((child instanceof HTMLElement) ? child : this.createElement(child)));
-                return element;
             },
 
             renderCurrentLevel(typeCode) {
@@ -185,6 +198,21 @@
                     document.querySelector("#current_levels table").appendChild(tbody);
                 }
             },
+
+            getTypeDefn(typeCode) {
+                return this.LOOKUP.FOOD_TYPE.find(e => e.code === typeCode);
+            },
+
+            createElement({ tag = "div", attributes = {}, classes = [], html = "", text = "", children = [] }) {
+                const element = document.createElement(tag);
+                Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]));
+                classes.forEach(c => element.classList.add(c));
+                if (html) element.innerHTML = html;
+                if (text) element.textContent = text;
+                children.forEach(child => element.appendChild((child instanceof HTMLElement) ? child : this.createElement(child)));
+                return element;
+            },
+
             moreClicked(typeCode) {
                 const typeDefn = this.getTypeDefn(typeCode);
                 const typeData = this.DATA[typeCode];
@@ -210,6 +238,18 @@
 
                 dialogRef.showModal();
             },
+            expandCollapse(ref) {
+                const target = ref.closest("section").querySelector(".expandCollapsable");
+                if (ref.classList.contains("icon-caret_down")) {
+                    ref.classList.remove("icon-caret_down");
+                    ref.classList.add("icon-caret_up");
+                    target.classList.add("hide");
+                } else {
+                    ref.classList.remove("icon-caret_up");
+                    ref.classList.add("icon-caret_down");
+                    target.classList.remove("hide");
+                }
+            },
 
             foodTypeChanged(ref) {
                 const selectedOptionValue = ref.options[ref.selectedIndex].value;
@@ -226,51 +266,88 @@
             },
             countClicked(ref) {
                 const dataEntrySection = document.querySelector('#data_entry');
-                const bags = Math.round(dataEntrySection.querySelector('[data-type=perbag_qty] input').value);
-                if (bags < 0) bags = 0;
-                dataEntrySection.querySelector('[data-type=perbag_qty] input').value = bags;
-                const singles = Math.round(dataEntrySection.querySelector('[data-type=singles_qty] input').value);
-                if (singles < 0) singles = 0;
-                dataEntrySection.querySelector('[data-type=singles_qty] input').value = singles;
-
-                const entryDateRef = dataEntrySection.querySelector('input[name=entry_date]');
-                if (isNaN(entryDateRef.valueAsNumber)) {
-                    entryDateRef.valueAsNumber = new Date();
-                }
-
-                const foodTypeRef = dataEntrySection.querySelector('[data-type=food_type] select');
-                const selectedOptionValue = foodTypeRef.options[foodTypeRef.selectedIndex].value;
-                if (selectedOptionValue === '' || (bags === 0 && singles === 0)) {
-                    console.log('invalid');
+                dataEntrySection.querySelector(`input[name="action"][value="${ref.getAttribute("data-type")}"]`).checked = true;
+                // {date: '2024-08-23', type: '', count: 0, action: 'OLD'}
+                const record = this.getInventoryRecordInput();
+                // console.log(record);
+                // inputs validation
+                if (record.count === 0 || record.type === '') {
                     dataEntrySection.querySelectorAll(".inputs .input").forEach(e => e.classList.add("animate-error-blink"));
                     setTimeout(()=>{dataEntrySection.querySelectorAll(".inputs .input").forEach(e => e.classList.remove("animate-error-blink"));}, 1000);
                     return;
                 } else {
-                    const selectedFoodDesc = foodTypeRef.options[foodTypeRef.selectedIndex].text
-                    const perbag = +(dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent);
-                    const dialogRef = document.querySelector('#stock_entry_confirm_dialog');
-                    dialogRef.querySelector('.icon').classList.add((ref.getAttribute('data-type') === 'NEW') ? 'icon-stock_add' : 'icon-stock_tally');
-                    let html = `Recording ${bags * perbag + singles} ${selectedFoodDesc} `;
-                    html += (ref.getAttribute('data-type') === 'NEW') ? 'as <b>NEW</b> inventory' : 'into <b>EXISTING</b> stock';
-                    html += ` on ${entryDateRef.value}</p>`;
-                    dialogRef.querySelector('.mesg').innerHTML = html;
-
-                    this.confirmDialog({action: 'OPEN'}) ;
+                    this.stockEntryConfirmDialog({action: 'OPEN'}) ;
                 }
-
             },
-            confirmDialog({ action}) { // action: 'OPEN' | 'CLOSED'
+            getInventoryRecordInput() {
+                const dataEntrySection = document.querySelector('#data_entry');
+                let bags = Math.round(dataEntrySection.querySelector('[data-type=perbag_qty] input').value);
+                if (bags < 0) {
+                    bags = 0;
+                    dataEntrySection.querySelector('[data-type=perbag_qty] input').value = bags;
+                }
+                let singles = Math.round(dataEntrySection.querySelector('[data-type=singles_qty] input').value);
+                if (singles < 0) {
+                    singles = 0;
+                    dataEntrySection.querySelector('[data-type=singles_qty] input').value = singles;
+                }
+                const perbag = +(dataEntrySection.querySelector('[data-type=perbag_qty].hint .qty').textContent);
+                const count = bags * perbag + singles;
+                const date = dataEntrySection.querySelector('input[name=entry_date]').value;
+                if (!date) {
+                    dataEntrySection.querySelector('input[name=entry_date]').value = new Date();
+                }
+                const foodTypeRef = dataEntrySection.querySelector('[data-type=food_type] select');
+                const type = foodTypeRef.options[foodTypeRef.selectedIndex].value;
+                const action = dataEntrySection.querySelector('input[name="action"]:checked').value;
+                const record = {date, type, count, action};
+                return record;
+            },
+
+            async stockEntryConfirmDialog({action}) { // action: 'OPEN' | 'CLOSED'
                 const dialogRef = document.querySelector('#stock_entry_confirm_dialog');
                 if (action === 'OPEN') {
-                    dialogRef.returnValue = '';
-                    dialogRef.showModal();
-                } else {
-                    const returnValue = dialogRef.returnValue;
-                    console.log('closed:', returnValue);
-                    if (returnValue === 'ok') {
-                        console.log('send update...');
+                    const record = this.getInventoryRecordInput();
+                    const iconRef = dialogRef.querySelector('.icon');
+                    if (record.action === 'NEW') {
+                        iconRef.classList.remove('icon-stock_tally');
+                        iconRef.classList.add('icon-stock_add');
+                    } else {
+                        iconRef.classList.remove('icon-stock_add');
+                        iconRef.classList.add('icon-stock_tally');
                     }
-
+                    let html = `Recording ${record.count} ${this.getTypeDefn(record.type).desc} `;
+                    html += (record.action === 'NEW') ? 'as <b>NEW</b> inventory' : 'into <b>EXISTING</b> stock';
+                    html += ` on ${record.date}</p>`;
+                    dialogRef.querySelector('section[data-step=pre] div.mesg').innerHTML = html;
+                    dialogRef.querySelector('section[data-step=post]').classList.add("hide");
+                    dialogRef.querySelector('section[data-step=pre]').classList.remove("hide");
+                    dialogRef.showModal();
+                } else if (action === 'PROCEED') {
+                    dialogRef.querySelector('section[data-step=pre]').classList.add("hide");
+                    dialogRef.querySelector('section[data-step=post] div.mesg').innerHTML = 'span class="animate-blink">Updating record...</span>';
+                    dialogRef.querySelector('section[data-step=post]').classList.remove("hide");
+                    const record = this.getInventoryRecordInput()
+                    console.log('sending update...', record);
+                    try {
+                        const record = this.getInventoryRecordInput();
+                        const response = await this.insertInventoryRecord({record});
+                        console.log('response:', response);
+                        let html = '';
+                        if (response['result'] === 'success') {
+                            //{"result": "success", "row": [["2024-08-28T19:52:57.882Z"],"OLD","M_S","2024-08-28","3"]}
+                            html = `Record entered. <i>(${response.row[4]} ${this.getTypeDefn(response.row[2]).desc} `;
+                            html += (response.row[1] === 'NEW') ? 'as <b>NEW</b> inventory' : 'into <b>EXISTING</b> stock';
+                            html += ` on ${response.row[3]})</i>`;
+                            this.resetDataEntrySection();
+                            this.renderCurrentStockSection();
+                        } else {
+                            html = `Hmm! The response was unexpected (${response.error})`;
+                        }
+                        dialogRef.querySelector('section[data-step=post] div.mesg').textContent = html;
+                    } catch (e) {
+                        dialogRef.querySelector('section[data-step=post] div.mesg').textContent = 'Unexpected error: ' + e;
+                    }
                 }
             },
 
@@ -282,6 +359,15 @@
             // console.log(dateControl.value); // prints "2017-06-01"
             // console.log(dateControl.valueAsNumber); // prints 1496275200000, a JavaScript timestamp (ms)
 
+            showAlertDialog({mesg='', html=''}) {
+                const dialogRef = document.getElementById('alert_dialog');
+                dialogRef.querySelector("div").textContent = mesg;
+                if (html) {
+                    dialogRef.querySelector("div").innerHTML = html;
+                }
+                dialogRef.showModal();
+            },
+
             async getLookups() {
                 const uri = this.ENDPOINT + '?op=get_lookups';
                 return await this.getJson(uri);
@@ -292,12 +378,15 @@
                 return await this.getJson(uri);
             },
 
-            async sendUpdate() {
+            // record = {date, type, count, action};
+            async insertInventoryRecord({record}) {
                 const formData = new FormData();
-                formData.append("action", "NEW"); // NEW | OLD
-                formData.append("type", "Q");
-                formData.append("date", "2024-09-11");
-                formData.append("count", "10");
+                formData.append("op", "insert_inventory_record");
+                ["action", "type", "date", "count"].forEach(value => formData.append(value, record[value]));
+                    // formData.append("action", "NEW"); // NEW | OLD
+                    // formData.append("type", "Q");
+                    // formData.append("date", "2024-09-11");
+                    // formData.append("count", "10");
                 return await this.post(this.ENDPOINT, formData);
             },
 
