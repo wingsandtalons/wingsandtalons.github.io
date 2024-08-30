@@ -318,14 +318,14 @@
                     }
                     let html = `Recording ${record.count} ${this.getTypeDefn(record.type).desc} `;
                     html += (record.action === 'NEW') ? 'as <b>NEW</b> inventory' : 'into <b>EXISTING</b> stock';
-                    html += ` on ${record.date}</p>`;
+                    html += ` on ${record.date}`;
                     dialogRef.querySelector('section[data-step=pre] div.mesg').innerHTML = html;
                     dialogRef.querySelector('section[data-step=post]').classList.add("hide");
                     dialogRef.querySelector('section[data-step=pre]').classList.remove("hide");
                     dialogRef.showModal();
                 } else if (action === 'PROCEED') {
                     dialogRef.querySelector('section[data-step=pre]').classList.add("hide");
-                    dialogRef.querySelector('section[data-step=post] div.mesg').innerHTML = 'span class="animate-blink">Updating record...</span>';
+                    dialogRef.querySelector('section[data-step=post] div.mesg').innerHTML = '<span class="animate-blink">Updating record...</span>';
                     dialogRef.querySelector('section[data-step=post]').classList.remove("hide");
                     const record = this.getInventoryRecordInput()
                     console.log('sending update...', record);
