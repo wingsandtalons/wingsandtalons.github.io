@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knowledge Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <div class="min-h-screen flex flex-col">
+        <main id="app" class="flex-grow"></main>
+        <footer class="text-center p-4 text-sm text-gray-500 border-t">
+            <a href="#" onclick="goToStart()">Back to Start</a>
+        </footer>
+    </div>
+
+    <script>
+        const dataset = 
+        [
+        {
+            "question":"What does the Migratory Bird Treaty Act protect?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Only Raptors"
+            },
+            {
+                "text":"Native Bird Species",
+                "correct":"y"
+            },
+            {
+                "text":"Non-Native Bird Species"
+            },
+            {
+                "text":"Mammals"
+            }
+            ]
+        },
+        {
+            "question":"What is the name of the law protecting Eagle parts?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Eagle Feather Law",
+                "correct":"y"
+            },
+            {
+                "text":"Eagle Pieces Law"
+            },
+            {
+                "text":"Eagle Protection Act"
+            },
+            {
+                "text":"Eagle Advisory Act"
+            }
+            ]
+        },
+        {
+            "question":"Who owns our birds?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Illinois Department of Natural Resources"
+            },
+            {
+                "text":"United States Department of Agriculture"
+            },
+            {
+                "text":"Fish and Wildlife Service",
+                "correct":"y"
+            },
+            {
+                "text":"Wings and Talons"
+            },
+            {
+                "text":"National Oceanic and Atmospheric Administration"
+            }
+            ]
+        },
+        {
+            "question":"How many hours of training are required for an Education Permit from the FWS?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"200"
+            },
+            {
+                "text":"220"
+            },
+            {
+                "text":"240",
+                "correct":"y"
+            },
+            {
+                "text":"260"
+            }
+            ]
+        },
+        {
+            "question":"Which organizations do we maintain permits/licenses from?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"US Fish and Wildlife Service",
+                "correct":"y"
+            },
+            {
+                "text":"Illinois Department of Natural Resources",
+                "correct":"y"
+            },
+            {
+                "text":"National Oceanic & Atmospheric Administration"
+            },
+            {
+                "text":"Association of Zoos & Aquariums"
+            },
+            {
+                "text":"United States Department of Agriculture",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe the 3 different types of anklets. Which one do we use?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Aylmeri",
+                "correct":"y"
+            },
+            {
+                "text":"Removable Aylmeri",
+                "correct":"y"
+            },
+            {
+                "text":"Traditional"
+            }
+            ]
+        },
+        {
+            "question":"Which birds do we primarily provide block perches for?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Falcons, some owls",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What is the most important step when learning to handle raptors?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Learning to read their behavior",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What knot do we use to tether birds to perches?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Fisherman’s Knot"
+            },
+            {
+                "text":"Birdy Knot"
+            },
+            {
+                "text":"Slip Knot"
+            },
+            {
+                "text":"Falconer’s Knot",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Define “bate”.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"The bird attempts to jump or fly off the glove/perch",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"If a bird bates while handling, describe the appropriate reaction.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Raise your arm up and away as the birds generally prefer to be higher. Caveat, pay attention to the area around you.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Which piece of equipment do we not use regularly?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Jess",
+                "correct":"y"
+            },
+            {
+                "text":"Leash Extender",
+                "correct":"y"
+            },
+            {
+                "text":"Leash",
+                "correct":"y"
+            },
+            {
+                "text":"Swivel",
+                "correct":"y"
+            },
+            {
+                "text":"Hood"
+            }
+            ]
+        },
+        {
+            "question":"Which of these is true about anthropomorphism",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"It is the attribution of human traits, human feelings, human emotions, and human motivations to birds.",
+                "correct":"y"
+            },
+            {
+                "text":"It is an innate part of human psychology.",
+                "correct":"y"
+            },
+            {
+                "text":"Raptors can relate better to trainers who act like humans."
+            },
+            {
+                "text":"It can lead us to misrepresent the behavior of raptors.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Select the descriptions of behavior which are NOT helpful when working with the birds.",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Aggressive"
+            },
+            {
+                "text":"Vocalized, roused repeatedly",
+                "correct":"y"
+            },
+            {
+                "text":"Excited to see me"
+            },
+            {
+                "text":"Lethargic, slower to respond than usual",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Select the ABC path that we base our behavior training on:",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Stimulus -> Undesired -> Punishment"
+            },
+            {
+                "text":"Stimulus -> Desired -> Positive Reinforcement",
+                "correct":"y"
+            },
+            {
+                "text":"Stimulus -> Desired -> Negative Reinforcement"
+            }
+            ],
+            "image":"abc.png"
+        },
+        {
+            "question":"Every single time you interact with the bird is like a transaction. Which of the following are true?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"A positive interaction credits trust into the bank.",
+                "correct":"y"
+            },
+            {
+                "text":"A negative interaction debits trust from the bank.",
+                "correct":"y"
+            },
+            {
+                "text":"Do not hoard trust, spend it so it does not sit idle.",
+                "correct":"y"
+            },
+            {
+                "text":"You want a healthy positive balance in your trust account.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"The term “Study of One” in the context of raptor behavior means…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Make sure any studying you do is by one person."
+            },
+            {
+                "text":"Concentrate on the behavior of only one bird at a time."
+            },
+            {
+                "text":"Each bird must be considered to exhibit individual behavior.",
+                "correct":"y"
+            },
+            {
+                "text":"Studying of Overt Neurological Effectiveness in raptors."
+            }
+            ]
+        },
+        {
+            "question":"Preening is a display of normal and typical behavior for a bird.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Describe Preening behavior in raptors.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Preening is a maintenance behavior where they use their beaks to clean, align, and oil their feathers, ensuring they remain in optimal condition for flight and insulation",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Rousing behavior in raptors.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Rousing s a behavior where raptors puff out and shake their feathers, often to rearrange them for efficient flight, remove parasites, or prepare for takeoff. Also generally an indication that they are confortable.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Feaking behavior in raptors.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Feaking is the behavior of a raptor rubbing its beak against a surface to clean it, maintaining hygiene and sharpness, which is essential for hunting and feeding.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Mantling behavior in raptors.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Mantling is a defensive behavior where raptors spread their wings and cover their prey, protecting it from potential competitors or predators.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Raptors are which of the below.",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Warm blooded",
+                "correct":"y"
+            },
+            {
+                "text":"Cold blooded"
+            },
+            {
+                "text":"Vertebrates",
+                "correct":"y"
+            },
+            {
+                "text":"Invertebrates"
+            },
+            {
+                "text":"Egg laying",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Birds of prey are called raptors because their beaks are shaped like rapier swords.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Raptors use their talons to subdue prey and beaks to consume them.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Raptors are cold blooded because they evolved from reptiles and dinosaurs and they lay eggs.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Raptors use their beaks to chew up their food.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"All raptors including owls have crops.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Raptors have air sacs which help them be lighter.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Raptors have hollow bones which extend their respiratory capacity.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Raptors have binocular vision.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"inocular vision helps them see in different directions at the same time.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Raptors use their nictitating membrane to sleep.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Owls use echolocation to find their prey in the dark.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Turkey vultures lack of smell helps them tolerate the stench from rotting meat when they eat it.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Contour feathers help provide aerodynamic lift when flying.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Locate the following parts of a raptor (Cere, Nare, Keel, Crop, Patagium, Supraorbital Ridge)",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Cere, Nare, Keel, Crop, Patagium, Supraorbital Ridge",
+                "correct":"y"
+            }
+            ],
+            "image":"hawk_parts.png"
+        },
+        {
+            "question":"The function of feathers in raptors is for:",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Insulation from heat and cold",
+                "correct":"y"
+            },
+            {
+                "text":"Field Markings"
+            },
+            {
+                "text":"Protection of Skin",
+                "correct":"y"
+            },
+            {
+                "text":"Flight lift and control",
+                "correct":"y"
+            },
+            {
+                "text":"For behavioral display, to change shape and size",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Flight feathers:",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Flight feathers are long, stiff, and asymmetrically shaped feathers found on the wings and tail of birds, crucial for flight and control.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Down feathers:",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Down feathers are soft, fluffy feathers with little or no shaft, primarily used for insulation by trapping air close to the bird's body.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Bristle feathers:",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Bristle feathers are stiff feathers with few barbs, often found around the mouth or eyes of birds, acting as sensory mechanisms, or protecting the eyes.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe Powder feathers:",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Powder feathers are specialized down feathers that break down into a fine powder, used by some birds as a water repellent or for other specific functions like librication.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe molting.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Molting is the process by which birds replace old or worn feathers with new ones, a necessary cycle to maintain flight capability, insulation, and appearance, often timed to avoid critical periods like breeding or migration.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What special adaptations does the skeletal structure of raptors have?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Hollow bones, many bones fused together, extends respiratory system,",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Compare the structure of your arm to the wing of a raptor.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Elongated finger, fused phalanges, can move primaries, still have radius/ulna to twist, humerus shorter than ours, reduces load on that bone",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Compare the structure of your leg to that of a raptor.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Walking on toes, backwards knee is actually ankle, bulk of leg is tucked up",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Which is the largest muscle in raptors?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Pectoral (chest) muscle",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe the adaptation of the mouth to the beak in raptors.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"no teeth, made of keratin, lighweight because of lack of large jaw structure",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What is the Tomial tooth?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"A tomial tooth, found in falcons, is a sharp, triangular notch on the upper mandible of their beak that, in conjunction with a matching notch on the lower mandible, functions like scissors to quickly sever the spinal cord of prey, ensuring a swift and efficient kill.",
+                "correct":"y"
+            }
+            ],
+            "image":"tomial_beak.png"
+        },
+        {
+            "question":"Label the following feathers parts (Quill, Rachis, Barb, Barbule, Hooks).",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Quill - 1, Rachis - 2, Barb - 3, Barbule - 4, Hooks - 5",
+                "correct":"y"
+            }
+            ],
+            "image":"feathers.png"
+        },
+        {
+            "question":"The skeletal structure of birds…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Is continuous with the nasal cavities"
+            },
+            {
+                "text":"Has internal cross braces for support within the bones",
+                "correct":"y"
+            },
+            {
+                "text":"Do not contain air"
+            }
+            ]
+        },
+        {
+            "question":"Birds lack a diaphragm.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Which statement is true?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Diurnal raptors have a crop, used for storing food temporarily before it enters the proventriculus, and then the gizzard.",
+                "correct":"y"
+            },
+            {
+                "text":"Nocturnal raptors have a crop, used for storing food temporarily before it enters the proventriculus, and then the gizzard."
+            },
+            {
+                "text":"All raptors have a crop, used for storing food temporarily before it enters the gizzard, then the proventriculus"
+            },
+            {
+                "text":"All raptors have a crop, used for storing food temporarily before it enters the proventriculus, then the gizzard."
+            }
+            ]
+        },
+        {
+            "question":"The pellet is formed in the crop.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"The respiratory system in raptors is one of the most powerful and efficient in the entire animal kingdom.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Birds are most commonly believed to have evolved from…",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Theropods",
+                "correct":"y"
+            },
+            {
+                "text":"Thecodonts"
+            },
+            {
+                "text":"Gallimimus"
+            },
+            {
+                "text":"Fish"
+            }
+            ]
+        },
+        {
+            "question":"Describe convergent evolution.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Convergent evolution is two unrelated species evolve to fill the same niche in the environment and exhibit similar characteristics.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Describe urohydrosis.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Vultures urinate on their legs to disinfect them but the evaporation also provided cooling.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"A whole prey diet provides captive raptors with…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"A complete nutritional profile",
+                "correct":"y"
+            },
+            {
+                "text":"The opportunity to complete natural feeding behavior (tearing, gripping, caching)",
+                "correct":"y"
+            },
+            {
+                "text":"The ability to consume and reject certain parts",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"The smaller the raptor the higher the metabolic rate",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Which of the following are housing requirements by the Fish and Wildlife Service?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Access to sunlight",
+                "correct":"y"
+            },
+            {
+                "text":"Heating when temperatures dip below freezing",
+                "correct":"y"
+            },
+            {
+                "text":"Size according to species and display or education permit",
+                "correct":"y"
+            },
+            {
+                "text":"A roof so the bird does not get wet when it rains",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Coping is defined as trimming a bird’s beak/talons",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Lack of regular coping may lead to…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Beak breakage",
+                "correct":"y"
+            },
+            {
+                "text":"Talons puncturing foot pad",
+                "correct":"y"
+            },
+            {
+                "text":"Talon breaking off or pulling away from the sheath",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Pellets are…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Compact, indigestible parts of prey regurgitated daily",
+                "correct":"y"
+            },
+            {
+                "text":"A bird’s feces"
+            },
+            {
+                "text":"A sign of illness"
+            },
+            {
+                "text":"Unique to owls"
+            }
+            ]
+        },
+        {
+            "question":"Captive raptors obtain most of their water intake from….",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"The provided water bowls"
+            },
+            {
+                "text":"Their food sources",
+                "correct":"y"
+            },
+            {
+                "text":"What is dispensed through a spray bottle"
+            }
+            ]
+        },
+        {
+            "question":"Raptors have specific nutritional needs that can be met by mass market retailers.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"If the mute of a raptor includes a green color, this indicates that their digestive system is full and the bird is displaying health.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What is the study of animal behavior called?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"Ethology",
+                "correct":"y"
+            },
+            {
+                "text":"Etymology"
+            },
+            {
+                "text":"Entomology"
+            },
+            {
+                "text":"Ethnology"
+            }
+            ]
+        },
+        {
+            "question":"Which of the following do you need for a successful ethogram?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Behavior Category Definitions",
+                "correct":"y"
+            },
+            {
+                "text":"Time Sampling Method",
+                "correct":"y"
+            },
+            {
+                "text":"Data Collection Sheet",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Why might an ethogram be important?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"It gives us a baseline behavior for each of our birds",
+                "correct":"y"
+            },
+            {
+                "text":"It gives us objective data for each of our birds under “normal” conditions",
+                "correct":"y"
+            },
+            {
+                "text":"It is a key input for welfare decisions.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What is enrichment?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Enrichment can be defined as the altering of an animal’s environment to encourage and increase species specific behavior, and may include devices and offerings that are designed to create choices and elicit naturalistic behaviors.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What does successful enrichment look like?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Goal-Oriented",
+                "correct":"y"
+            },
+            {
+                "text":"Promotes Natural Behaviors",
+                "correct":"y"
+            },
+            {
+                "text":"Cost Effective",
+                "correct":"y"
+            },
+            {
+                "text":"Not Time Consuming to Create",
+                "correct":"y"
+            },
+            {
+                "text":"Safe for the Birds",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Match the wing and tail shape to the raptor groups (Buteos, Accipiters/Astur, Eagles/Vultures, Falcons).",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Buteos - 1, Accipiters/Astur - 2, Eagles/Vultures - 4, Falcons - 3",
+                "correct":"y"
+            }
+            ],
+            "image":"wing_shapes.png"
+        },
+        {
+            "question":"Which of the field marks are true for a TUVU?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"The head is covered with feathers in the winter."
+            },
+            {
+                "text":"They usually soar with their wings held in a slight “V” shape.",
+                "correct":"y"
+            },
+            {
+                "text":"They flap their wings a lot and fly very steadily."
+            },
+            {
+                "text":"They usually have a slightly rocking motion when soaring.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Which of these field marks are true for a RTHA?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"The belly is always unmarked."
+            },
+            {
+                "text":"The patagial marks are on the wingtips, and are red."
+            },
+            {
+                "text":"The feet are fully feathered."
+            },
+            {
+                "text":"The tail feathers are reddish for adults.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Which of these field marks are true for a BAEA?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"They have the majestic eagle call that is commonly shown in videos."
+            },
+            {
+                "text":"The white head is present only in adult males."
+            },
+            {
+                "text":"Fish is a large portion of their diet.",
+                "correct":"y"
+            },
+            {
+                "text":"They can have wingspans that reach 6ft or more.",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Nocturnal is most active at night. Diurnal is most active in the daytime.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True",
+                "correct":"y"
+            },
+            {
+                "text":"False"
+            }
+            ]
+        },
+        {
+            "question":"Crepuscular is active both at night and day.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Rank these owls by size, largest to smallest (BDOW, GHOW, WESO, BNOW)",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"BDOW - 2, GHOW - 1, WESO - 4, BNOW - 3",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Match the owl to its eye color (technically color of the sclera, not the color of the cornea):",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"GHOW - black, BDOW - yellow, BNOW - black, EASO - yellow"
+            },
+            {
+                "text":"GHOW - black, BDOW - black, BNOW - yellow, EASO - yellow"
+            },
+            {
+                "text":"GHOW - yellow, BDOW - black, BNOW - black, EASO - yellow",
+                "correct":"y"
+            },
+            {
+                "text":"GHOW - yellow, BDOW - yellow, BNOW - black, EASO - black"
+            }
+            ]
+        },
+        {
+            "question":"Which of the below owls have ear tufts (plumicorns)?",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"GHOW",
+                "correct":"y"
+            },
+            {
+                "text":"BDOW"
+            },
+            {
+                "text":"BNOW"
+            },
+            {
+                "text":"EASO",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"List some raptors that have feathered tarsi.",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Owls, Golden Eagle, Tough-Legged Hawk, Ferruginous Hawk",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Yellow or Orange eyes generally mean an owl is…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Diurnal"
+            },
+            {
+                "text":"Nocturnal"
+            },
+            {
+                "text":"Aquatic"
+            },
+            {
+                "text":"Crepuscular",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Owls have how many vertebrae?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"7"
+            },
+            {
+                "text":"10"
+            },
+            {
+                "text":"14",
+                "correct":"y"
+            },
+            {
+                "text":"17"
+            }
+            ]
+        },
+        {
+            "question":"Owls can turn their head how far around?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"90"
+            },
+            {
+                "text":"180"
+            },
+            {
+                "text":"270",
+                "correct":"y"
+            },
+            {
+                "text":"360"
+            }
+            ]
+        },
+        {
+            "question":"Tufts are used for…",
+            "type":"multiple-choice",
+            "answers":[
+            {
+                "text":"Camouflage",
+                "correct":"y"
+            },
+            {
+                "text":"Courtship",
+                "correct":"y"
+            },
+            {
+                "text":"Communication",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Eastern Screech Owls have how many color phases? What are they?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"2, red and gray",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"The Eastern Screech Owl can be found in what habitats?",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Deciduous forests, woodlands",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"What habitat does a Barred Owl live in? Where has it recently expanded its range into?\\",
+            "type":"open-ended",
+            "answers":[
+            {
+                "text":"Riparian, Pacific Northwest",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"The Great Horned Owl is the heaviest owl in North America.",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"True"
+            },
+            {
+                "text":"False",
+                "correct":"y"
+            }
+            ]
+        },
+        {
+            "question":"Hawks are believed to see how much better than humans?",
+            "type":"single-choice",
+            "answers":[
+            {
+                "text":"2"
+            },
+            {
+                "text":"4"
+            },
+            {
+                "text":"6"
+            },
+            {
+                "text":"8",
+                "correct":"y"
+            },
+            {
+                "text":"Who do we appreciate?"
+            }
+            ]
+        },
+        {
+            "question":"Red-tailed Hawks are the largest hawk in North America",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True"
+        },
+        {
+            "text":"False",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"The RTHA has a wingspan of about 2-4ft",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True"
+        },
+        {
+            "text":"False",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"RTHAs get their first red feathers after?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"1 year",
+            "correct":"y"
+        },
+        {
+            "text":"2 years"
+        },
+        {
+            "text":"3 years"
+        },
+        {
+            "text":"4 years"
+        }
+        ]
+    },
+    {
+        "question":"What do we a call a group of Broad-winged Hawks?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"Teacup"
+        },
+        {
+            "text":"Pot"
+        },
+        {
+            "text":"Kettle",
+            "correct":"y"
+        },
+        {
+            "text":"Parliament"
+        }
+        ]
+    },
+    {
+        "question":"What do we call the identifying stripe on falcon heads?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"Magnificent stripe"
+        },
+        {
+            "text":"Maleficent strip"
+        },
+        {
+            "text":"Malodorous stripe"
+        },
+        {
+            "text":"Malar stripe",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"The kestrel is the smallest falcon in North America",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"The American kestrel can hover.",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"The AMKE can see in the ultraviolet spectrum.",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"What word describes a group of vultures?",
+        "type":"multiple-choice",
+        "answers":[
+        {
+            "text":"Kettle",
+            "correct":"y"
+        },
+        {
+            "text":"Committee",
+            "correct":"y"
+        },
+        {
+            "text":"Wake",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"What is the average wingspan of the turkey vulture?",
+        "type":"open-ended",
+        "answers":[
+        {
+            "text":"6ft",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"Turkey vultures have the largest olfactory system of any bird.",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"Lead exposure threatens raptor populations in the wild?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"Bald Eagles are still on the US endangered species list?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True"
+        },
+        {
+            "text":"False",
+            "correct":"y"
+        }
+        ]
+    },
+    {
+        "question":"Poison (intentional or not) is the biggest threat to vulture species worldwide.",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"A RTHA call is dubbed over eagle calls on tv.",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"True",
+            "correct":"y"
+        },
+        {
+            "text":"False"
+        }
+        ]
+    },
+    {
+        "question":"Which owl species is best known for eating skunk?",
+        "type":"single-choice",
+        "answers":[
+        {
+            "text":"Eastern Screech Owl"
+        },
+        {
+            "text":"Western Screech Owl"
+        },
+        {
+            "text":"Great Horned Owl",
+            "correct":"y"
+        },
+        {
+            "text":"Barred Owl"
+        },
+        {
+            "text":"Barn Owl"
+        }
+        ]
+    }
+]
+;
+
+        let currentIndex = 0;
+        let userAnswers = [];
+        let results = [];
+        const app = document.getElementById('app');
+
+        function goToStart() {
+            currentIndex = 0;
+            userAnswers = [];
+            results = [];
+            renderLanding();
+        }
+
+        function renderLanding() {
+            app.innerHTML = `
+        <div class="max-w-xl mx-auto py-20 text-center">
+          <h1 class="text-4xl font-bold mb-6">Knowledge Assessment</h1>
+          <button onclick="startQuiz()" class="bg-blue-600 text-white px-6 py-3 rounded-xl text-lg">Start</button>
+        </div>
+      `;
+        }
+
+        window.startQuiz = () => renderQuestion(currentIndex);
+
+        function renderQuestion(index) {
+            const q = dataset[index];
+            app.innerHTML = '';
+
+            const container = document.createElement('div');
+            container.className = 'max-w-2xl mx-auto p-4';
+
+            const progress = document.createElement('p');
+            progress.className = 'text-sm text-gray-600 mb-2';
+            progress.textContent = `Question ${index + 1} of ${dataset.length}`;
+            container.appendChild(progress);
+
+            if (q.image) {
+                const img = document.createElement('img');
+                img.src = `./images/${q.image}`;
+                img.alt = 'Question Image';
+                img.className = 'rounded-xl w-full object-cover mb-4';
+                container.appendChild(img);
+            }
+
+            const questionText = document.createElement('h2');
+            questionText.className = 'text-xl font-semibold mb-4';
+            questionText.textContent = q.question; // q.text
+            container.appendChild(questionText);
+
+            const form = document.createElement('form');
+            form.className = 'space-y-3 mb-4';
+            let submitBtn;
+
+            if (q.type === 'single-choice') {
+                q.answers.forEach((a, i) => {
+                    const label = document.createElement('label');
+                    label.className = 'block';
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'answer';
+                    input.value = i;
+                    label.appendChild(input);
+                    label.append(` ${a.text}`);
+                    form.appendChild(label);
+                });
+            } else if (q.type === 'multiple-choice') {
+                q.answers.forEach((a, i) => {
+                    const label = document.createElement('label');
+                    label.className = 'block';
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.name = 'answer';
+                    input.value = i;
+                    label.appendChild(input);
+                    label.append(` ${a.text}`);
+                    form.appendChild(label);
+                });
+            } else {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'open-answer';
+                input.placeholder = 'Type your answer here';
+                input.className = 'w-full border rounded-lg px-3 py-2';
+                form.appendChild(input);
+            }
+
+            submitBtn = document.createElement('button');
+            submitBtn.type = 'submit';
+            submitBtn.textContent = 'Submit';
+            submitBtn.disabled = true;
+            submitBtn.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg disabled:opacity-50';
+            form.appendChild(submitBtn);
+
+            const reveal = document.createElement('div');
+            reveal.className = 'mt-4 text-green-600 font-medium hidden';
+
+            form.addEventListener('input', () => {
+                if (q.type === 'open-ended') {
+                    submitBtn.disabled = !form['open-answer'].value.trim();
+                } else {
+                    submitBtn.disabled = form.querySelectorAll('input:checked, input[type=radio]:checked').length === 0;
+                }
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isCorrect = false;
+                const correctAnswers = q.answers.map((a, i) => a.correct === 'y' ? i : null).filter(i => i !== null);
+
+                if (q.type === 'single-choice') {
+                    const selected = parseInt(form.answer.value);
+                    userAnswers[index] = [selected];
+                    isCorrect = correctAnswers.includes(selected);
+                    q.answers.forEach((a, i) => {
+                        const input = form.querySelector(`input[value='${i}']`);
+                        if (a.correct === "y") input.parentElement.classList.add('bg-green-100');
+                        else if (input.checked) input.parentElement.classList.add('bg-red-100');
+                        input.disabled = true;
+                    });
+                } else if (q.type === 'multiple-choice') {
+                    const selected = [...form.querySelectorAll('input:checked')].map(i => parseInt(i.value));
+                    userAnswers[index] = selected;
+                    isCorrect = selected.length === correctAnswers.length && selected.every(i => correctAnswers.includes(i));
+                    q.answers.forEach((a, i) => {
+                        const input = form.querySelector(`input[value='${i}']`);
+                        if (a.correct === "y") input.parentElement.classList.add('bg-green-100');
+                        else if (input.checked) input.parentElement.classList.add('bg-red-100');
+                        input.disabled = true;
+                    });
+                } else {
+                    const answer = form['open-answer'].value.trim().toLowerCase();
+                    userAnswers[index] = answer;
+                    //const correctAnswer = q.answers[0]?.text || '';
+                    const correctAnswer = q.answers[0].text;
+                    reveal.textContent = `Hint: ${correctAnswer}`;
+                    reveal.classList.remove('hidden');
+                    isCorrect = null; // Skip correctness check
+                    form['open-answer'].disabled = true;
+                }
+
+                results[index] = isCorrect;
+                submitBtn.disabled = true;
+            });
+
+            const nav = document.createElement('div');
+            nav.className = 'flex justify-between pt-4';
+
+            const prevBtn = document.createElement('button');
+            prevBtn.textContent = 'Previous';
+            prevBtn.className = 'text-blue-600 underline';
+            prevBtn.disabled = index === 0;
+            prevBtn.onclick = () => renderQuestion(index - 1);
+            nav.appendChild(prevBtn);
+
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = index === dataset.length - 1 ? 'Finish' : 'Next';
+            nextBtn.className = 'text-blue-600 underline';
+            nextBtn.onclick = () => {
+                if (index === dataset.length - 1) showSummary();
+                else renderQuestion(index + 1);
+            };
+            nav.appendChild(nextBtn);
+
+            container.appendChild(form);
+            container.appendChild(reveal);
+            container.appendChild(nav);
+
+            app.appendChild(container);
+        }
+
+        function showSummary() {
+            const correctCount = results.filter(r => r === true).length;
+            const incorrectCount = results.filter(r => r === false).length;
+
+            app.innerHTML = `
+        <div class="max-w-xl mx-auto p-6 text-center">
+          <h2 class="text-2xl font-bold mb-4">Quiz Summary</h2>
+          <p class="mb-4">You got <strong>${correctCount}</strong> correct and <strong>${incorrectCount}</strong> incorrect.</p>
+          <ul class="space-y-2">
+            ${results.map((r, i) => r === false ? `<li><button class="text-blue-600 underline" onclick="renderQuestion(${i})">Review Question ${i + 1}</button></li>` : '').join('')}
+          </ul>
+        </div>
+      `;
+        }
+
+        renderLanding();
+    </script>
+</body>
+
+</html>

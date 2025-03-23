@@ -1,0 +1,591 @@
+
+q:What does the Migratory Bird Treaty Act protect?
+t:s
+w:Only Raptors
+c:Native Bird Species
+w:Non-Native Bird Species
+w:Mammals
+
+q:What is the name of the law protecting Eagle parts?
+t:s
+c:Eagle Feather Law
+w:Eagle Pieces Law
+w:Eagle Protection Act
+w:Eagle Advisory Act
+
+q:Who owns our birds?
+t:m
+w:Illinois Department of Natural Resources
+w:United States Department of Agriculture
+c:Fish and Wildlife Service
+w:Wings and Talons
+w:National Oceanic and Atmospheric Administration
+
+q:How many hours of training are required for an Education Permit from the FWS?
+t:s
+w:200
+w:220
+c:240
+w:260
+
+q:Which organizations do we maintain permits/licenses from?
+t:m
+c:US Fish and Wildlife Service
+c:Illinois Department of Natural Resources
+w:National Oceanic & Atmospheric Administration
+w:Association of Zoos & Aquariums
+c:United States Department of Agriculture
+
+q:Describe the 3 different types of anklets. Which one do we use?
+t:m
+c:Aylmeri
+c:Removable Aylmeri
+w:Traditional
+
+q:Which birds do we primarily provide block perches for?
+t:o
+c:Falcons, some owls
+
+q:What is the most important step when learning to handle raptors?
+t:o
+c:Learning to read their behavior
+
+q:What knot do we use to tether birds to perches?
+t:s
+w:Fisherman’s Knot
+w:Birdy Knot
+w:Slip Knot
+c:Falconer’s Knot
+
+q:Define “bate”.
+t:o
+c:The bird attempts to jump or fly off the glove/perch
+
+q:If a bird bates while handling, describe the appropriate reaction.
+t:o
+c:Raise your arm up and away as the birds generally prefer to be higher. Caveat, pay attention to the area around you.
+
+q:Which piece of equipment do we not use regularly?
+t:m
+c:Jess
+c:Leash Extender
+c:Leash
+c:Swivel
+w:Hood
+
+q:Which of these is true about anthropomorphism
+t:m
+c:It is the attribution of human traits, human feelings, human emotions, and human motivations to birds.
+c:It is an innate part of human psychology.
+w:Raptors can relate better to trainers who act like humans.
+c:It can lead us to misrepresent the behavior of raptors.
+
+q:Select the descriptions of behavior which are NOT helpful when working with the birds.
+t:m
+w:Aggressive
+c:Vocalized, roused repeatedly
+w:Excited to see me
+c:Lethargic, slower to respond than usual
+
+q:Select the ABC path that we base our behavior training on:
+t:s
+w:Stimulus -> Undesired -> Punishment
+c:Stimulus -> Desired -> Positive Reinforcement
+w:Stimulus -> Desired -> Negative Reinforcement
+i:abc.png
+
+q:Every single time you interact with the bird is like a transaction. Which of the following are true?
+t:m
+c:A positive interaction credits trust into the bank.
+c:A negative interaction debits trust from the bank.
+c:Do not hoard trust, spend it so it does not sit idle.
+c:You want a healthy positive balance in your trust account.
+
+q:The term “Study of One” in the context of raptor behavior means…
+t:m
+w:Make sure any studying you do is by one person.
+w:Concentrate on the behavior of only one bird at a time.
+c:Each bird must be considered to exhibit individual behavior.
+w:Studying of Overt Neurological Effectiveness in raptors.
+
+q:Preening is a display of normal and typical behavior for a bird.
+t:s
+c:True
+w:False
+
+q:Describe Preening behavior in raptors.
+t:o
+c:Preening is a maintenance behavior where they use their beaks to clean, align, and oil their feathers, ensuring they remain in optimal condition for flight and insulation
+
+q:Describe Rousing behavior in raptors.
+t:o
+c:Rousing s a behavior where raptors puff out and shake their feathers, often to rearrange them for efficient flight, remove parasites, or prepare for takeoff. Also generally an indication that they are confortable.
+
+q:Describe Feaking behavior in raptors.
+t:o
+c:Feaking is the behavior of a raptor rubbing its beak against a surface to clean it, maintaining hygiene and sharpness, which is essential for hunting and feeding.
+
+q:Describe Mantling behavior in raptors.
+t:o
+c:Mantling is a defensive behavior where raptors spread their wings and cover their prey, protecting it from potential competitors or predators.
+
+q:Raptors are which of the below.
+t:m
+c:Warm blooded
+w:Cold blooded
+c:Vertebrates
+w:Invertebrates
+c:Egg laying
+
+q:Birds of prey are called raptors because their beaks are shaped like rapier swords.
+t:s
+w:True
+c:False
+
+q:Raptors use their talons to subdue prey and beaks to consume them.
+t:s
+c:True
+w:False
+
+q:Raptors are cold blooded because they evolved from reptiles and dinosaurs and they lay eggs.
+t:s
+w:True
+c:False
+
+q:Raptors use their beaks to chew up their food.
+t:s
+w:True
+c:False
+
+q:All raptors including owls have crops.
+t:s
+w:True
+c:False
+
+q:Raptors have air sacs which help them be lighter.
+t:s
+c:True
+w:False
+
+q:Raptors have hollow bones which extend their respiratory capacity.
+t:s
+c:True
+w:False
+
+q:Raptors have binocular vision.
+t:s
+c:True
+w:False
+
+q:inocular vision helps them see in different directions at the same time.
+t:s
+w:True
+c:False
+
+q:Raptors use their nictitating membrane to sleep.
+t:s
+w:True
+c:False
+
+q:Owls use echolocation to find their prey in the dark.
+t:s
+w:True
+c:False
+
+q:Turkey vultures lack of smell helps them tolerate the stench from rotting meat when they eat it.
+t:s
+w:True
+c:False
+
+q:Contour feathers help provide aerodynamic lift when flying.
+t:s
+w:True
+c:False
+
+q:Locate the following parts of a raptor (Cere, Nare, Keel, Crop, Patagium, Supraorbital Ridge)
+t:o
+c:Cere, Nare, Keel, Crop, Patagium, Supraorbital Ridge
+i:hawk_parts.png
+
+q:The function of feathers in raptors is for:
+t:m
+c:Insulation from heat and cold
+w:Field Markings
+c:Protection of Skin
+c:Flight lift and control
+c:For behavioral display, to change shape and size
+
+q:Describe Flight feathers:
+t:o
+c:Flight feathers are long, stiff, and asymmetrically shaped feathers found on the wings and tail of birds, crucial for flight and control.
+
+q:Describe Down feathers:
+t:o
+c:Down feathers are soft, fluffy feathers with little or no shaft, primarily used for insulation by trapping air close to the bird's body.
+
+q:Describe Bristle feathers:
+t:o
+c:Bristle feathers are stiff feathers with few barbs, often found around the mouth or eyes of birds, acting as sensory mechanisms, or protecting the eyes.
+
+q:Describe Powder feathers:
+t:o
+c:Powder feathers are specialized down feathers that break down into a fine powder, used by some birds as a water repellent or for other specific functions like librication.
+
+q:Describe molting.
+t:o
+c:Molting is the process by which birds replace old or worn feathers with new ones, a necessary cycle to maintain flight capability, insulation, and appearance, often timed to avoid critical periods like breeding or migration.
+
+q:What special adaptations does the skeletal structure of raptors have?
+t:o
+c:Hollow bones, many bones fused together, extends respiratory system,
+
+q:Compare the structure of your arm to the wing of a raptor.
+t:o
+c:Elongated finger, fused phalanges, can move primaries, still have radius/ulna to twist, humerus shorter than ours, reduces load on that bone
+
+q:Compare the structure of your leg to that of a raptor.
+t:o
+c:Walking on toes, backwards knee is actually ankle, bulk of leg is tucked up
+
+q:Which is the largest muscle in raptors?
+t:o
+c:Pectoral (chest) muscle
+
+q:Describe the adaptation of the mouth to the beak in raptors.
+t:o
+c:no teeth, made of keratin, lighweight because of lack of large jaw structure
+
+q:What is the Tomial tooth?
+t:o
+c:A tomial tooth, found in falcons, is a sharp, triangular notch on the upper mandible of their beak that, in conjunction with a matching notch on the lower mandible, functions like scissors to quickly sever the spinal cord of prey, ensuring a swift and efficient kill.
+i:tomial_beak.png
+
+q:Label the following feathers parts (Quill, Rachis, Barb, Barbule, Hooks).
+t:o
+c:Quill - 1, Rachis - 2, Barb - 3, Barbule - 4, Hooks - 5
+i:feathers.png
+
+q:The skeletal structure of birds…
+t:m
+w:Is continuous with the nasal cavities
+c:Has internal cross braces for support within the bones
+w:Do not contain air
+
+q:Birds lack a diaphragm.
+t:s
+c:True
+w:False
+
+q:Which statement is true?
+t:s
+c:Diurnal raptors have a crop, used for storing food temporarily before it enters the proventriculus, and then the gizzard.
+w:Nocturnal raptors have a crop, used for storing food temporarily before it enters the proventriculus, and then the gizzard.
+w:All raptors have a crop, used for storing food temporarily before it enters the gizzard, then the proventriculus
+w:All raptors have a crop, used for storing food temporarily before it enters the proventriculus, then the gizzard.
+
+q:The pellet is formed in the crop.
+t:s
+w:True
+c:False
+
+q:The respiratory system in raptors is one of the most powerful and efficient in the entire animal kingdom.
+t:s
+c:True
+w:False
+
+q:Birds are most commonly believed to have evolved from…
+t:s
+c:Theropods
+w:Thecodonts
+w:Gallimimus
+w:Fish
+
+q:Describe convergent evolution.
+t:o
+c:Convergent evolution is two unrelated species evolve to fill the same niche in the environment and exhibit similar characteristics.
+
+q:Describe urohydrosis.
+t:o
+c:Vultures urinate on their legs to disinfect them but the evaporation also provided cooling.
+
+q:A whole prey diet provides captive raptors with…
+t:m
+c:A complete nutritional profile
+c:The opportunity to complete natural feeding behavior (tearing, gripping, caching)
+c:The ability to consume and reject certain parts
+
+q:The smaller the raptor the higher the metabolic rate
+t:s
+c:True
+w:False
+
+q:Which of the following are housing requirements by the Fish and Wildlife Service?
+t:m
+c:Access to sunlight
+c:Heating when temperatures dip below freezing
+c:Size according to species and display or education permit
+c:A roof so the bird does not get wet when it rains
+
+q:Coping is defined as trimming a bird’s beak/talons
+t:s
+c:True
+w:False
+
+q:Lack of regular coping may lead to…
+t:m
+c:Beak breakage
+c:Talons puncturing foot pad
+c:Talon breaking off or pulling away from the sheath
+
+q:Pellets are…
+t:m
+c:Compact, indigestible parts of prey regurgitated daily
+w:A bird’s feces
+w:A sign of illness
+w:Unique to owls
+
+q:Captive raptors obtain most of their water intake from….
+t:m
+w:The provided water bowls
+c:Their food sources
+w:What is dispensed through a spray bottle
+
+q:Raptors have specific nutritional needs that can be met by mass market retailers.
+t:s
+w:True
+c:False
+
+q:If the mute of a raptor includes a green color, this indicates that their digestive system is full and the bird is displaying health.
+t:s
+w:True
+c:False
+
+q:What is the study of animal behavior called?
+t:s
+c:Ethology
+w:Etymology
+w:Entomology
+w:Ethnology
+
+q:Which of the following do you need for a successful ethogram?
+t:m
+c:Behavior Category Definitions
+c:Time Sampling Method
+c:Data Collection Sheet
+
+q:Why might an ethogram be important?
+t:m
+c:It gives us a baseline behavior for each of our birds
+c:It gives us objective data for each of our birds under “normal” conditions
+c:It is a key input for welfare decisions.
+
+q:What is enrichment?
+t:o
+c:Enrichment can be defined as the altering of an animal’s environment to encourage and increase species specific behavior, and may include devices and offerings that are designed to create choices and elicit naturalistic behaviors.
+
+q:What does successful enrichment look like?
+t:m
+c:Goal-Oriented
+c:Promotes Natural Behaviors
+c:Cost Effective
+c:Not Time Consuming to Create
+c:Safe for the Birds
+
+q:Match the wing and tail shape to the raptor groups (Buteos, Accipiters/Astur, Eagles/Vultures, Falcons).
+t:o
+c: Buteos - 1, Accipiters/Astur - 2, Eagles/Vultures - 4, Falcons - 3
+i:wingshapes.png
+
+q:Which of the field marks are true for a TUVU?
+t:m
+w:The head is covered with feathers in the winter.
+c:They usually soar with their wings held in a slight “V” shape.
+w:They flap their wings a lot and fly very steadily.
+c:They usually have a slightly rocking motion when soaring.
+
+q:Which of these field marks are true for a RTHA?
+t:m
+w:The belly is always unmarked.
+w:The patagial marks are on the wingtips, and are red.
+w:The feet are fully feathered.
+c:The tail feathers are reddish for adults.
+
+q:Which of these field marks are true for a BAEA?
+t:m
+w:They have the majestic eagle call that is commonly shown in videos.
+w:The white head is present only in adult males.
+c:Fish is a large portion of their diet.
+c:They can have wingspans that reach 6ft or more.
+
+q:Nocturnal is most active at night. Diurnal is most active in the daytime.
+t:s
+c:True
+w:False
+
+q:Crepuscular is active both at night and day.
+t:s
+w:True
+c:False
+
+q:Rank these owls by size, largest to smallest (BDOW, GHOW, WESO, BNOW)
+t:o
+c:BDOW - 2, GHOW - 1, WESO - 4, BNOW - 3
+
+q:Match the owl to its eye color (technically color of the sclera, not the color of the cornea):
+t:s
+w:GHOW - black, BDOW - yellow, BNOW - black, EASO - yellow
+w:GHOW - black, BDOW - black, BNOW - yellow, EASO - yellow
+c:GHOW - yellow, BDOW - black, BNOW - black, EASO - yellow
+w:GHOW - yellow, BDOW - yellow, BNOW - black, EASO - black
+
+q:Which of the below owls have ear tufts (plumicorns)?
+t:m
+c:GHOW
+w:BDOW
+w:BNOW
+c:EASO
+
+q:List some raptors that have feathered tarsi.
+t:o
+c:Owls, Golden Eagle, Tough-Legged Hawk, Ferruginous Hawk
+
+q:Yellow or Orange eyes generally mean an owl is…
+t:m
+w:Diurnal
+w:Nocturnal
+w:Aquatic
+c:Crepuscular
+
+q:Owls have how many vertebrae?
+t:s
+w:7
+w:10
+c:14
+w:17
+
+q:Owls can turn their head how far around?
+t:s
+w:90
+w:180
+c:270
+w:360
+
+q:Tufts are used for…
+t:m
+c:Camouflage
+c:Courtship
+c:Communication
+
+q:Eastern Screech Owls have how many color phases? What are they?
+t:o
+c:2, red and gray
+
+q:The Eastern Screech Owl can be found in what habitats?
+t:o
+c:Deciduous forests, woodlands
+
+q:What habitat does a Barred Owl live in? Where has it recently expanded its range into?\
+t:o
+c:Riparian, Pacific Northwest
+
+q:The Great Horned Owl is the heaviest owl in North America.
+t:s
+w:True
+c:False
+
+q:Hawks are believed to see how much better than humans?
+t:s
+w:2
+w:4
+w:6
+c:8
+w:Who do we appreciate?
+
+q:Red-tailed Hawks are the largest hawk in North America
+t:s
+w:True
+c:False
+
+q:The RTHA has a wingspan of about 2-4ft
+t:s
+w:True
+c:False
+
+q:RTHAs get their first red feathers after?
+t:s
+c:1 year
+w:2 years
+w:3 years
+w:4 years
+
+q:What do we a call a group of Broad-winged Hawks?
+t:s
+w:Teacup
+w:Pot
+c:Kettle
+w:Parliament
+
+q:What do we call the identifying stripe on falcon heads?
+t:s
+w:Magnificent stripe
+w:Maleficent strip
+w:Malodorous stripe
+c:Malar stripe
+
+q:The kestrel is the smallest falcon in North America
+t:s
+c:True
+w:False
+
+q:The American kestrel can hover.
+t:s
+c:True
+w:False
+
+q:The AMKE can see in the ultraviolet spectrum.
+t:s
+c:True
+w:False
+
+q:What word describes a group of vultures?
+t:m
+c:Kettle
+c:Committee
+c:Wake
+
+q:What is the average wingspan of the turkey vulture?
+t:o
+c:6ft
+
+q:Turkey vultures have the largest olfactory system of any bird.
+t:s
+c:True
+w:False
+
+q:Lead exposure threatens raptor populations in the wild?
+t:s
+c:True
+w:False
+
+q:Bald Eagles are still on the US endangered species list?
+t:s
+w:True
+c:False
+
+q:Poison (intentional or not) is the biggest threat to vulture species worldwide.
+t:s
+c:True
+w:False
+
+q:A RTHA call is dubbed over eagle calls on tv.
+t:s
+c:True
+w:False
+
+q:Which owl species is best known for eating skunk?
+t:s
+w:Eastern Screech Owl
+w:Western Screech Owl
+c:Great Horned Owl
+w:Barred Owl
+w:Barn Owl

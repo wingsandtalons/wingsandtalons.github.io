@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html,
+        body,
+        div,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        ul,
+        ol,
+        li,
+        dl,
+        dt,
+        dd,
+        form,
+        fieldset,
+        caption,
+        legend,
+        img,
+        table,
+        tr,
+        td,
+        th {
+            margin: 0;
+            padding: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            color: #444448;
+            font-size: 1em;
+            line-height: 1.4;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+        }
+
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+        }
+
+        audio,
+        canvas,
+        iframe,
+        img,
+        svg,
+        video {
+            vertical-align: middle;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Input Text</h2>
+    <textarea id="inputTextArea"></textarea>
+
+    <button onclick="APP.processText()">Process Text</button>
+
+    <h2>Output Text</h2>
+    <textarea id="outputTextArea" readonly></textarea>
+
+
+    </div>
+    <script>
+        const APP = {
+            init() {
+                console.log('APP inited...')
+            },
+            processText() { 
+            const inputTextArea = document.getElementById('inputTextArea');
+            const outputTextArea = document.getElementById('outputTextArea');
+
+            const inputText = inputTextArea.value;
+            const output = this.parseQuizFile(inputText);
+
+            outputTextArea.value = JSON.stringify(output);
+        },
+
+            parseQuizFile(fileContent) {
+                // Split the content into groups (questions) using empty lines as separators
+                const groups = fileContent.split(/\n\s*\n/).filter(group => group.trim());
+                const questionObjects = [];
+                // Process each group
+                for (const group of groups) {
+                    // Split the group into lines
+                    const lines = group.split('\n');
+                    const questionObject = {
+                        question: '',
+                        type: '',
+                        answers: []
+                    };
+                    // Process each line in the group
+                    for (const line of lines) {
+                        const trimmedLine = line.trim();
+
+                        // Process question line
+                        if (trimmedLine.startsWith('q:')) {
+                            questionObject.question = trimmedLine.substring(2).trim();
+                        }
+                        // Process type line
+                        else if (trimmedLine.startsWith('t:')) {
+                            const typeCode = trimmedLine.substring(2).trim();
+                            if (typeCode === 's') {
+                                questionObject.type = 'single-choice';
+                            } else if (typeCode === 'm') {
+                                questionObject.type = 'multiple-choice';
+                            } else if (typeCode === 'o') {
+                                questionObject.type = 'open-ended';
+                            }
+                        }
+                        // Process image line
+                        else if (trimmedLine.startsWith('i:')) {
+                            questionObject.image = trimmedLine.substring(2).trim();
+                        }
+                        // Process answer lines (c: for correct, w: for wrong)
+                        else if (trimmedLine.startsWith('c:') || trimmedLine.startsWith('w:')) {
+                            const isCorrect = trimmedLine.startsWith('c:');
+                            const answerText = trimmedLine.substring(2).trim();
+                            questionObject.answers.push({
+                                text: answerText,
+                                correct: isCorrect
+                            });
+                        }
+                    }
+                    // Add the processed question object to the result array
+                    questionObjects.push(questionObject);
+                }
+                return questionObjects;
+            },
+
+        };
+
+        APP.init();
+
+
+    </script>
+</body>
+
+</html>
